@@ -1,0 +1,38 @@
+log - redirect a program's output into a uniquely named log file
+Copyright (C) 2005-2022 by Bitvise Limited
+
+Usage: log [options] <log-file-base-name> <command>
+
+'log' appends to <log-file-base-name> the current date and time of the log's
+creation. When the child process completes, the log file is additionally
+renamed to a new name that conveys the child process exit status.
+
+Options:
+
+  -e  Use a log file name of the form *-ExitCode-NNN.log. If not provided,
+      will use file names of the form *-SUCCESS.log and *-ERROR-NNN.log
+
+  -t  Add timestamp before each line in the log file
+  -s  Add start timestamp at top of log file
+  -f  Add finish timestamp at end of log file
+
+  -c  Add command being executed at top of log file
+  -x  Add child process exit code at end of log file
+
+  -d  Create the log file directory if it doesn't yet exist
+  -a  If a new log file directory is created, create it so it can only be
+      accessed with administrative permissions
+
+  -o  Write the program's output to standard output as well
+
+Returns the exit code of the child process, or 32323 on error.
+
+Example. The command:
+
+  log "c:\Log Files\dir" cmd /c dir
+
+executes "cmd /c dir" and redirects its output into a file name like:
+
+  c:\Log Files\dir-20050927-195214223-SUCCESS.log     (when exit code is 0)
+  c:\Log Files\dir-20050927-195214223-ERROR-<n>.log   (when exit code = <n>)
+
